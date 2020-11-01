@@ -104,7 +104,6 @@ public class Conversation implements ObservableEntity, Serializable {
     }
 
     public static Conversation create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final String groupName = request.getParameter("conversation_name");
         final Boolean removed = Boolean.parseBoolean(request.getParameter("removed"));

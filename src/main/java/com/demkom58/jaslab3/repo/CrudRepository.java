@@ -14,7 +14,5 @@ public interface CrudRepository<ID, VALUE> {
 
     void save(@NotNull VALUE value);
 
-    boolean add(@NotNull VALUE value);
-
     @NotNull String getTableName();
 }

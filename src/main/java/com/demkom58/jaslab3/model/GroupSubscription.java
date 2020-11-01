@@ -35,6 +35,22 @@ public class GroupSubscription implements ObservableEntity, Serializable {
         this.accepted = accepted;
     }
 
+    public GroupSubscription(Integer subscriptionId, Integer subscriber, Integer group,
+                             Long creationTime, Boolean accepted) {
+        this.subscriptionId = subscriptionId;
+
+        User u = new User();
+        u.setUserId(subscriber);
+        this.subscriber = u;
+
+        Group g = new Group();
+        g.setGroupId(group);
+        this.group = g;
+
+        this.creationTime = creationTime;
+        this.accepted = accepted;
+    }
+
     public GroupSubscription() {
     }
 
@@ -127,20 +143,12 @@ public class GroupSubscription implements ObservableEntity, Serializable {
     }
 
     public static GroupSubscription create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final Integer subscriberId = Integer.parseInt(request.getParameter("subscriber"));
         final Integer groupId = Integer.parseInt(request.getParameter("group"));
         final Long creationTime = Long.parseLong(request.getParameter("creation_time"));
         final Boolean accepted = Boolean.parseBoolean(request.getParameter("accepted"));
-
-        final User user = new User();
-        user.setUserId(subscriberId);
-
-        final Group group = new Group();
-        group.setGroupId(groupId);
-
-        return new GroupSubscription(id == -1 ? null : id, user, group, creationTime, accepted);
+        return new GroupSubscription(id == -1 ? null : id, subscriberId, groupId, creationTime, accepted);
     }
 
 }

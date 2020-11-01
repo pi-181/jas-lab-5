@@ -26,7 +26,7 @@ public class User implements ObservableEntity, Serializable {
     private String patronymic;
 
     @Column(name = "birthday_date")
-    private Date birthdayDate;
+    private Long birthdayDate;
 
     @Column(name = "creation_time", nullable = false)
     private Long creationTime;
@@ -41,7 +41,7 @@ public class User implements ObservableEntity, Serializable {
     private Boolean mailConfirmed = false;
 
     public User(Integer userId, String username, String surname, String patronymic,
-                Date birthdayDate, Long creationTime, String email,
+                Long birthdayDate, Long creationTime, String email,
                 Boolean verified, Boolean mailConfirmed) {
         this.userId = userId;
         this.username = username;
@@ -101,11 +101,11 @@ public class User implements ObservableEntity, Serializable {
     }
 
     @Nullable
-    public Date getBirthdayDate() {
+    public Long getBirthdayDate() {
         return birthdayDate;
     }
 
-    public void setBirthdayDate(@Nullable Date birthdayDate) {
+    public void setBirthdayDate(@Nullable Long birthdayDate) {
         this.birthdayDate = birthdayDate;
     }
 
@@ -182,7 +182,7 @@ public class User implements ObservableEntity, Serializable {
         final String username = request.getParameter("username");
         final String surname = request.getParameter("surname");
         final String patronymic = request.getParameter("patronymic");
-        final Date birthdayDate = Date.valueOf(LocalDate.parse(request.getParameter("birthday_date")));
+        final Long birthdayDate = Long.parseLong(request.getParameter("birthday_date"));
         final Long creationTime = Long.parseLong(request.getParameter("creation_time"));
         final String email = request.getParameter("email");
         final Boolean verified = Boolean.parseBoolean(request.getParameter("verified"));
@@ -192,7 +192,7 @@ public class User implements ObservableEntity, Serializable {
 
     public static User createEmpty() {
         return new User(
-                -1, "", "", "", new Date(System.currentTimeMillis()),
+                -1, "", "", "", System.currentTimeMillis(),
                 System.currentTimeMillis(), "", false, false
         );
     }

@@ -40,6 +40,20 @@ public class Group implements ObservableEntity, Serializable {
         this.removed = removed;
     }
 
+    public Group(Integer groupId, Integer owner, String groupName, String description,
+                 Boolean closed, Boolean removed) {
+        this.groupId = groupId;
+
+        User u = new User();
+        u.setUserId(owner);
+        this.owner = u;
+
+        this.groupName = groupName;
+        this.description = description;
+        this.closed = closed;
+        this.removed = removed;
+    }
+
     public Group() {
     }
 
@@ -139,18 +153,13 @@ public class Group implements ObservableEntity, Serializable {
     }
 
     public static Group create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final Integer ownerId = Integer.parseInt(request.getParameter("owner"));
         final String groupName = request.getParameter("group_name");
         final String description = request.getParameter("description");
         final Boolean closed = Boolean.parseBoolean(request.getParameter("closed"));
         final Boolean removed = Boolean.parseBoolean(request.getParameter("removed"));
-
-        final User user = new User();
-        user.setUserId(ownerId);
-
-        return new Group(id == -1 ? null : id, user, groupName, description, closed, removed);
+        return new Group(id == -1 ? null : id, ownerId, groupName, description, closed, removed);
     }
 
 }

@@ -36,6 +36,22 @@ public class Message implements ObservableEntity, Serializable {
         this.conversation = conversation;
     }
 
+    public Message(Integer messageId, Integer sender, String textMessage,
+                   Boolean removed, Integer conversation) {
+        this.messageId = messageId;
+
+        User u = new User();
+        u.setUserId(sender);
+        this.sender = u;
+
+        this.textMessage = textMessage;
+        this.removed = removed;
+
+        Conversation c = new Conversation();
+        c.setConversationId(conversation);
+        this.conversation = c;
+    }
+
     public Message() {
     }
 
@@ -128,19 +144,11 @@ public class Message implements ObservableEntity, Serializable {
     }
 
     public static Message create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final Integer senderId = Integer.parseInt(request.getParameter("sender"));
         final String text = request.getParameter("text");
         final Boolean removed = Boolean.parseBoolean(request.getParameter("removed"));
         final Integer conversationId = Integer.parseInt(request.getParameter("conversation"));
-
-        final User user = new User();
-        user.setUserId(senderId);
-
-        final Conversation conversation = new Conversation();
-        conversation.setConversationId(conversationId);
-
-        return new Message(id == -1 ? null : id, user, text, removed, conversation);
+        return new Message(id == -1 ? null : id, senderId, text, removed, conversationId);
     }
 }

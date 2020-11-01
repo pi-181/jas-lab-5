@@ -33,6 +33,21 @@ public class ConversationSubscription implements ObservableEntity, Serializable 
         this.creationTime = creationTime;
     }
 
+    public ConversationSubscription(Integer subscriptionId, Integer subscriber,
+                                    Integer conversation, Long creationTime) {
+        this.subscriptionId = subscriptionId;
+
+        User u = new User();
+        u.setUserId(subscriber);
+        this.subscriber = u;
+
+        Conversation c = new Conversation();
+        c.setConversationId(conversation);
+        this.conversation = c;
+
+        this.creationTime = creationTime;
+    }
+
     public ConversationSubscription() {
     }
 
@@ -116,19 +131,11 @@ public class ConversationSubscription implements ObservableEntity, Serializable 
     }
 
     public static ConversationSubscription create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final Integer subscriberId = Integer.parseInt(request.getParameter("subscriber"));
         final Integer conversationId = Integer.parseInt(request.getParameter("conversation"));
         final Long creationTime = Long.parseLong(request.getParameter("creation_time"));
-
-        final User user = new User();
-        user.setUserId(subscriberId);
-
-        final Conversation conversation = new Conversation();
-        conversation.setConversationId(conversationId);
-
-        return new ConversationSubscription(id == -1 ? null : id, user, conversation, creationTime);
+        return new ConversationSubscription(id == -1 ? null : id, subscriberId, conversationId, creationTime);
     }
 
 }

@@ -41,6 +41,23 @@ public class Post implements ObservableEntity, Serializable {
         this.postDate = postDate;
     }
 
+    public Post(Integer postId, String postContent, Integer views,
+                Integer group, Integer author, Long postDate) {
+        this.postId = postId;
+        this.postContent = postContent;
+        this.views = views;
+
+        Group g = new Group();
+        g.setGroupId(group);
+        this.group = g;
+
+        User u = new User();
+        u.setUserId(author);
+        this.author = u;
+
+        this.postDate = postDate;
+    }
+
     public Post() {
     }
 
@@ -143,20 +160,12 @@ public class Post implements ObservableEntity, Serializable {
     }
 
     public static Post create(HttpServletRequest request) {
-        System.out.println(request.getParameterMap());
         final int id = Integer.parseInt(request.getParameter("id"));
         final String content = request.getParameter("content");
         final Integer views = Integer.parseInt(request.getParameter("views"));
         final Integer groupId = Integer.parseInt(request.getParameter("group"));
         final Integer authorId = Integer.parseInt(request.getParameter("author"));
         final Long postdate = Long.parseLong(request.getParameter("postdate"));
-
-        final Group group = new Group();
-        group.setGroupId(groupId);
-
-        final User user = new User();
-        user.setUserId(authorId);
-
-        return new Post(id == -1 ? null : id, content, views, group, user, postdate);
+        return new Post(id == -1 ? null : id, content, views, groupId, authorId, postdate);
     }
 }

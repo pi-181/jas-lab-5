@@ -1,6 +1,7 @@
 package com.demkom58.jaslab3.repo;
 
 import com.demkom58.jaslab3.model.ObservableEntity;
+import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +38,11 @@ public class CommonRepository<K, V extends ObservableEntity> implements CrudRepo
     @Override
     @SuppressWarnings("unchecked")
     public @Nullable V getById(@NotNull K key) {
-        return (V) selectById.setParameter("id", key).getSingleResult();
+        try {
+            return (V) selectById.setParameter("id", key).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -64,23 +69,10 @@ public class CommonRepository<K, V extends ObservableEntity> implements CrudRepo
             if (attached)
                 entityManager.merge(value);
             else
-                entityManager.persist(value);
+                entityManager.unwrap(Session.class).save(value);
         } finally {
             transaction.commit();
         }
-    }
-
-    @Override
-    public boolean add(@NotNull V v) {
-        final EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        try {
-            entityManager.unwrap(Session.class).save(v);
-        } finally {
-            transaction.commit();
-        }
-
-        return true;
     }
 
     @NotNull
