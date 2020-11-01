@@ -4,11 +4,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
     <display-name>JAXWS-Tomcat</display-name>
-    <context-param>
-        <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>/user.xsd</param-value>
-    </context-param>
-
     <listener>
         <listener-class>
             com.sun.xml.ws.transport.http.servlet.WSServletContextListener
