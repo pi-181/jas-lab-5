@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint
+            name="Conversation"
+            implementation="com.demkom58.jaslab5.service.impl.ConversationService"
+            url-pattern="/conversation"
+    />
+    <endpoint
+            name="ConversationSubscription"
+            implementation="com.demkom58.jaslab5.service.impl.ConversationSubscriptionService"
+            url-pattern="/conversation_subscription"
+    />
+    <endpoint
+            name="Group"
+            implementation="com.demkom58.jaslab5.service.impl.GroupService"
+            url-pattern="/group"
+    />
+    <endpoint
+            name="GroupSubscription"
+            implementation="com.demkom58.jaslab5.service.impl.GroupSubscriptionService"
+            url-pattern="/groups_ubscription"
+    />
+    <endpoint
+            name="Message"
+            implementation="com.demkom58.jaslab5.service.impl.MessageService"
+            url-pattern="/message"
+    />
+    <endpoint
+            name="Post"
+            implementation="com.demkom58.jaslab5.service.impl.PostService"
+            url-pattern="/post"
+    />
+    <endpoint
+            name="User"
+            implementation="com.demkom58.jaslab5.service.impl.UserService"
+            url-pattern="/user"
+    />
+</endpoints>
